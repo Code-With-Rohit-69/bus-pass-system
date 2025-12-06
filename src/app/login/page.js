@@ -1,0 +1,95 @@
+"use client";
+import { Bus, BusFront, Eye, EyeOff, Lock, Mail } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
+    <div className="login">
+      <div className="flex flex-col items-center mt-5">
+        <span>
+          <BusFront size={50} className="font-bold" />
+        </span>
+        <h2 className="font-semibold text-2xl w-60">Bus Pass & Transport Management System</h2>
+      </div>
+      <div className="w-full mt-10 px-10 flex items-center justify-center">
+        <div className="login-left relative">
+          <form className="shadow-(--shadow-card) rounded-2xl py-15 px-8 absolute bg-(--color-bg) z-10  -left-100 translate-y-0">
+            <h1 className="font-semibold text-2xl text-center">Login</h1>
+            <div className="input-box mb-6">
+              <label htmlFor="email" className="text-[.9rem]">
+                Email Address
+              </label>
+              <div className="input flex gap-2 border border-[#d4d4d49b] rounded items-center px-2 py-3">
+                <Mail className="text-(--color-text-light)" size={15} />
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  className="min-w-[300px] border-none outline-none"
+                  id="email"
+                />
+              </div>
+            </div>
+            <div className="input-box mb-6">
+              <label htmlFor="password" className="text-[.9rem]">
+                Password
+              </label>
+              <div className="input flex gap-2 border border-[#d4d4d49b] rounded items-center px-2 py-3">
+                <Lock className="text-(--color-text-light)" size={15} />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className="min-w-[300px] border-none outline-none"
+                  id="password"
+                />
+                {showPassword ? (
+                  <EyeOff
+                    className="text-(--color-text-light) cursor-pointer"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    size={15}
+                  />
+                ) : (
+                  <Eye
+                    className="text-(--color-text-light) cursor-pointer"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    size={15}
+                  />
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="bg-(--color-accent) text-(--color-primary) w-full py-2 font-bold cursor-pointer rounded-lg hover:bg-(--color-accent)/80 text-[1.2rem]"
+            >
+              Login
+            </button>
+
+            <p className="text-center text-[.8rem] mt-3">
+              Don't have an account?{"  "}
+              <Link href="/register" className="font-semibold hover:underline">
+                Register
+              </Link>
+            </p>
+          </form>
+        </div>
+        <div className="login-right">
+          <div className="login-image absolute">
+            <Image
+              src="/images/Bus1.svg"
+              alt="Bus Image"
+              width={100}
+              height={100}
+              className="w-[30vw]"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

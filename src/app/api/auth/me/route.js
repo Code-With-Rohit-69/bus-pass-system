@@ -15,11 +15,9 @@ export const GET = async (req) => {
         { status: 401 }
       );
     }
-
-    // Verify token
     let decoded;
     try {
-      decoded = verifyToken(token);
+      decoded = await verifyToken(token);
     } catch (error) {
       return NextResponse.json(
         { success: false, message: error.message },

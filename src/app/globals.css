@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+:root {
+  --color-primary: #1E3A8A; /* Dark Blue */
+  --color-primary-light: #3B82F6; /* Light Blue Accent */
+  --color-accent: #FACC15; /* Yellow */
+
+  /* Background & UI Colors */
+  --color-bg: #FFFFFF; /* White */
+  --color-bg-light: #F8FAFC; /* Very Light Gray */
+  --color-card: #FFFFFF; /* Card / Form Background */
+
+  /* Text Colors */
+  --color-text: #0F172A; /* Almost Black */
+  --color-text-light: #475569; /* Muted Gray */
+
+  /* Border & Line */
+  --color-border: #94A3B8; /* Cool Gray */
+
+  /* Shadows */
+  --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
