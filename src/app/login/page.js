@@ -2,10 +2,27 @@
 import { Bus, BusFront, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showEye, setShowEye] = useState(false);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  useEffect(() => {
+    if (data.password.length > 1) {
+      setShowEye(true);
+    } else {
+      setShowEye(false);
+    }
+  }, [data.password]);
 
   return (
     <div className="login">
@@ -13,7 +30,9 @@ const Login = () => {
         <span>
           <BusFront size={50} className="font-bold" />
         </span>
-        <h2 className="font-semibold text-2xl w-60">Bus Pass & Transport Management System</h2>
+        <h2 className="font-semibold text-2xl w-60">
+          Bus Pass & Transport Management System
+        </h2>
       </div>
       <div className="w-full mt-10 px-10 flex items-center justify-center">
         <div className="login-left relative">
@@ -30,6 +49,8 @@ const Login = () => {
                   placeholder="Email address"
                   className="min-w-[300px] border-none outline-none"
                   id="email"
+                  onChange={handleChange}
+                  value={data.email}
                 />
               </div>
             </div>
@@ -44,16 +65,22 @@ const Login = () => {
                   placeholder="Password"
                   className="min-w-[300px] border-none outline-none"
                   id="password"
+                  onChange={handleChange}
+                  value={data.password}
                 />
                 {showPassword ? (
                   <EyeOff
-                    className="text-(--color-text-light) cursor-pointer"
+                    className={`text-(--color-text-light) cursor-pointer ${
+                      showEye ? "inline" : "hidden"
+                    } absolute right-10`}
                     onClick={() => setShowPassword((prev) => !prev)}
                     size={15}
                   />
                 ) : (
                   <Eye
-                    className="text-(--color-text-light) cursor-pointer"
+                    className={`text-(--color-text-light) cursor-pointer ${
+                      showEye ? "inline" : "hidden"
+                    } absolute right-10`}
                     onClick={() => setShowPassword((prev) => !prev)}
                     size={15}
                   />
