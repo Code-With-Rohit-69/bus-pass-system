@@ -9,7 +9,7 @@ export const POST = async (request) => {
     const { name, email, password, phone, collegeId, address } =
       await request.json();
 
-    if (!name || !email || !password || !phone || !collegeId || !address) {
+    if (!name || !email || !password || !phone || !address) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
         { status: 400 }
@@ -37,7 +37,7 @@ export const POST = async (request) => {
       email: emailNormalized,
       password,
       phone,
-      collegeId,
+      collegeId: collegeId || "",
       address,
     });
 

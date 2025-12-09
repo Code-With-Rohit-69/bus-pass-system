@@ -32,7 +32,7 @@ const Navbar = () => {
           </div>
         </div>
         <div
-          className={`navbar-mid transition-all duration-300 z-100 ${
+          className={`navbar-mid transition-all duration-300 z-100 w-auto ${
             currentY > 200
               ? "fixed top-2 left-1/2 -translate-x-1/2 opacity-100 pointer-events-auto"
               : ""
@@ -46,7 +46,7 @@ const Navbar = () => {
             <ul className="flex items-center gap-20">
               <li
                 className={`font-semibold ${
-                  pathname === "/" && "text-(--color-primary)"
+                  pathname === "/" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -55,7 +55,7 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/about" && "text-(--color-primary)"
+                  pathname === "/about" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -64,7 +64,7 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/service" && "text-(--color-primary)"
+                  pathname === "/service" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -72,8 +72,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li
-                className={`font-semibold ${
-                  pathname === "/apply-pass" && "text-(--color-primary)"
+                className={`font-semibold whitespace-nowrap ${
+                  pathname === "/apply-pass" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -82,7 +82,7 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/contact" && "text-(--color-primary)"
+                  pathname === "/contact" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">

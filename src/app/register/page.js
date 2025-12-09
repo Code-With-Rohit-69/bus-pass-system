@@ -1,4 +1,7 @@
 "use client";
+import { ThreeDotAnimation } from "@/components/common/ThreeDotAnimation";
+import Toast from "@/components/common/Toaster";
+import { useUserStore } from "@/store/userStore.js";
 import {
   Bus,
   BusFront,
@@ -24,6 +27,7 @@ const Register = () => {
     phone: "",
     address: "",
   });
+  const [toast, setToast] = useState({ message: "", type: "" });
 
   const handleChange = (e) => {
     setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -37,6 +41,31 @@ const Register = () => {
     }
   }, [data.password]);
 
+  const { loading, register } = useUserStore();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    const res = await register(data);
+    if (res?.success) {
+      setToast({ message: "Registration Successful!", type: "success" });
+      setData({
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        address: "",
+      });
+    } else {
+      setToast({
+        message: res?.message || "Something went wrong!",
+        type: "error",
+      });
+    }
+
+    setTimeout(() => setToast({ message: "", type: "" }), 3000);
+  };
+
   return (
     <div className="Register pb-20 pt-2">
       <div className="flex flex-col items-center">
@@ -49,7 +78,10 @@ const Register = () => {
       </div>
       <div className="w-full mt-10 px-10 flex items-center justify-center">
         <div className="Register-left relative">
-          <form className="shadow-(--shadow-card) rounded-2xl py-6 px-8 bg-(--color-bg)">
+          <form
+            onSubmit={handleRegister}
+            className="shadow-(--shadow-card) rounded-2xl py-6 px-8 bg-(--color-bg)"
+          >
             <h1 className="font-semibold text-2xl text-center">Register</h1>
             <div className="input-box mb-6">
               <label htmlFor="name" className="text-[.9rem]">
@@ -62,6 +94,8 @@ const Register = () => {
                   placeholder="Full Name"
                   className="min-w-[300px] border-none outline-none"
                   id="name"
+                  value={data.name}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -76,6 +110,8 @@ const Register = () => {
                   placeholder="Email address"
                   className="min-w-[300px] border-none outline-none"
                   id="email"
+                  value={data.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -125,6 +161,8 @@ const Register = () => {
                   placeholder="Phone Number"
                   className="min-w-[300px] border-none outline-none"
                   id="phone"
+                  value={data.phone}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -140,15 +178,18 @@ const Register = () => {
                   placeholder="Address"
                   className="min-w-[300px] border-none outline-none"
                   id="address"
+                  value={data.address}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="bg-(--color-accent) text-(--color-primary) w-full py-2 font-bold cursor-pointer rounded-lg hover:bg-(--color-accent)/80 text-[1.2rem]"
+              disabled={loading}
+              className="bg-(--color-accent) text-(--color-primary) w-full h-10 flex items-center justify-center font-bold cursor-pointer rounded-lg hover:bg-(--color-accent)/80 text-[1.2rem]"
             >
-              Signup
+              {loading ? <ThreeDotAnimation loading /> : "Register"}
             </button>
 
             <p className="text-center text-[.8rem] mt-3">
@@ -171,6 +212,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      {toast.message && <Toast message={toast.message} type={toast.type} />}
     </div>
   );
 };

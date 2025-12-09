@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     collegeId: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     address: {
