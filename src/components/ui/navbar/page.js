@@ -1,5 +1,6 @@
 "use client";
 
+import { useUserStore } from "@/store/userStore";
 import { BusFront } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,8 @@ const Navbar = () => {
 
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  const { user, logout } = useUserStore();
 
   return (
     <>
@@ -46,7 +49,8 @@ const Navbar = () => {
             <ul className="flex items-center gap-20">
               <li
                 className={`font-semibold ${
-                  pathname === "/" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
+                  pathname === "/" &&
+                  "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -55,7 +59,8 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/about" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
+                  pathname === "/about" &&
+                  "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -64,7 +69,8 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/service" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
+                  pathname === "/service" &&
+                  "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -73,7 +79,8 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold whitespace-nowrap ${
-                  pathname === "/apply-pass" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
+                  pathname === "/apply-pass" &&
+                  "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -82,7 +89,8 @@ const Navbar = () => {
               </li>
               <li
                 className={`font-semibold ${
-                  pathname === "/contact" && "rounded-full text-black bg-(--color-accent) px-4 py-1"
+                  pathname === "/contact" &&
+                  "rounded-full text-black bg-(--color-accent) px-4 py-1"
                 }`}
               >
                 <Link href="/" className="cursor-pointer">
@@ -94,18 +102,32 @@ const Navbar = () => {
         </div>
         <div className="navbar-right">
           <div className="flex items-center gap-5">
-            <button
-              className="rounded-lg px-6 py-2 bg-(--color-accent) text-(--color-primary) cursor-pointer font-semibold"
-              onClick={() => router.push("/login")}
-            >
-              Login
-            </button>
-            <button
-              className="rounded-lg px-6 py-2 bg-(--color-primary) text-white cursor-pointer"
-              onClick={() => router.push("/register")}
-            >
-              Register
-            </button>
+            {!user ? (
+              <>
+                <button
+                  className="rounded-lg px-6 py-2 bg-(--color-accent) text-(--color-primary) cursor-pointer font-semibold"
+                  onClick={() => router.push("/login")}
+                >
+                  Login
+                </button>
+                <button
+                  className="rounded-lg px-6 py-2 bg-(--color-primary) text-white cursor-pointer"
+                  onClick={() => router.push("/register")}
+                >
+                  Register
+                </button>
+              </>
+            ) : (
+              <button
+                className="rounded-lg px-6 py-2 bg-(--color-accent) text-(--color-primary) cursor-pointer font-semibold"
+                onClick={() => {
+                  logout();
+                  router.push("/");
+                }}
+              >
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </nav>

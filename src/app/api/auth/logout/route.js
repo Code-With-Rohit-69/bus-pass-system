@@ -7,7 +7,7 @@ export const POST = async (request) => {
         success: true,
         message: "Logout Successfully",
       },
-      { status: 400 }
+      { status: 200 }
     );
 
     request.cookies.set("token", "", {
@@ -16,6 +16,7 @@ export const POST = async (request) => {
       sameSite: "strict",
       maxAge: 0,
       path: "/",
+      expires: new Date(0),
     });
 
     return response;
