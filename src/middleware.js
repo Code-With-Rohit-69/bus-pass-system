@@ -1,19 +1,18 @@
 import { NextResponse } from "next/server";
-import { verifyToken } from "@/lib/auth";
 
 export function middleware(req) {
   const token = req.cookies.get("token")?.value;
   const pathname = req.nextUrl.pathname;
 
-  if (pathname === "/login" || pathname === "/register" || pathname === "/") {
-    return NextResponse.next();
+  if (
+    token &&
+    (pathname === "/" || pathname === "/login" || pathname === "/register")
+  ) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
-  // Protected routes rules
-  if (!token) {
-    const url = new URL("/login", req.url);
-    url.searchParams.set("error", "auth");
-    return NextResponse.redirect(url);
+  if (!token && pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();

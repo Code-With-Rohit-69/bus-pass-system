@@ -76,12 +76,12 @@ export const useUserStore = create((set) => ({
         {},
         { withCredentials: true }
       );
-      console.log("Logout: ", res.data);
-
       set({ loading: false, user: null, error: null });
+      return res.data;
     } catch (error) {
       console.log("Error in Logout user:", error);
       set({ loading: false });
+      return { success: false, message: "Logout failed" };
     }
   },
 }));

@@ -1,5 +1,6 @@
 "use client";
 
+import Toast from "@/components/common/Toaster";
 import { useUserStore } from "@/store/userStore";
 import { BusFront } from "lucide-react";
 import Link from "next/link";
@@ -11,6 +12,10 @@ const Navbar = () => {
   const [currentY, setCurrentY] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
+  const [toast, setToast] = useState({
+    message: "",
+    type: "",
+  });
 
   useEffect(() => {
     const handler = (e) => {
@@ -22,6 +27,20 @@ const Navbar = () => {
   }, []);
 
   const { user, logout } = useUserStore();
+
+  const handleLogout = async () => {
+    const res = await logout();
+    console.log("Logout: ", res);
+
+    if (res?.success) {
+      setToast({ message: res.message, type: "success" });
+      router.push("/");
+    } else {
+      setToast({ message: res.message, type: "success" });
+    }
+
+    setTimeout(() => setToast({ message: "", type: "" }), 3000);
+  };
 
   return (
     <>
@@ -120,16 +139,14 @@ const Navbar = () => {
             ) : (
               <button
                 className="rounded-lg px-6 py-2 bg-(--color-accent) text-(--color-primary) cursor-pointer font-semibold"
-                onClick={() => {
-                  logout();
-                  router.push("/");
-                }}
+                onClick={handleLogout}
               >
                 Logout
               </button>
             )}
           </div>
         </div>
+          {toast.message && <Toast message={toast.message} type={toast.type} />}
       </nav>
     </>
   );

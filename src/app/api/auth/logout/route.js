@@ -10,7 +10,7 @@ export const POST = async (request) => {
       { status: 200 }
     );
 
-    request.cookies.set("token", "", {
+    response.cookies.set("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Register = () => {
@@ -28,6 +29,7 @@ const Register = () => {
     address: "",
   });
   const [toast, setToast] = useState({ message: "", type: "" });
+  const router = useRouter();
 
   const handleChange = (e) => {
     setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -56,6 +58,7 @@ const Register = () => {
         phone: "",
         address: "",
       });
+      router.push("/dashboard");
     } else {
       setToast({
         message: res?.message || "Something went wrong!",

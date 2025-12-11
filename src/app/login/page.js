@@ -5,6 +5,7 @@ import { useUserStore } from "@/store/userStore";
 import { BusFront, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Login = () => {
@@ -18,6 +19,8 @@ const Login = () => {
     message: "",
     type: "",
   });
+
+  const router = useRouter();
 
   const { loading, user, error, login } = useUserStore();
 
@@ -44,6 +47,7 @@ const Login = () => {
         email: "",
         password: "",
       });
+      router.push("/dashboard");
     } else {
       setToast({
         message: res?.message || "Something went wrong!",
